@@ -1,3 +1,8 @@
+"""
+Asynchronous Methods for Deep Reinforcement Learning
+https://arxiv.org/pdf/1602.01783v2.pdf
+"""
+
 import numpy as np
 import tensorflow as tf
 import tensorflow.contrib.rnn as rnn

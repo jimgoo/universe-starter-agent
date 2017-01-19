@@ -96,6 +96,7 @@ def run():
     if not args.dry_run:
         if args.mode == "tmux":
             os.environ["TMUX"] = ""
+        #os.system('tmux newgrp docker')
         os.system("\n".join(cmds))
     print('\n'.join(notes))
 
