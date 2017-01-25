@@ -47,6 +47,7 @@ def run(args, server):
         ses.run(init_all_op)
 
     config = tf.ConfigProto(device_filters=["/job:ps", "/job:worker/task:{}/cpu:0".format(args.task)])
+    # config.gpu_options.per_process_gpu_memory_fraction = 0.2
     logdir = os.path.join(args.log_dir, 'train')
 
     if use_tf12_api:
@@ -129,13 +130,15 @@ Setting up Tensorflow for data parallel work
     def shutdown(signal, frame):
         logger.warn('Received signal %s: exiting', signal)
         sys.exit(128+signal)
+
     signal.signal(signal.SIGHUP, shutdown)
     signal.signal(signal.SIGINT, shutdown)
     signal.signal(signal.SIGTERM, shutdown)
 
     if args.job_name == "worker":
         server = tf.train.Server(cluster, job_name="worker", task_index=args.task,
-                                 config=tf.ConfigProto(intra_op_parallelism_threads=1, inter_op_parallelism_threads=2))
+                                 config=tf.ConfigProto(intra_op_parallelism_threads=1, 
+                                                       inter_op_parallelism_threads=2))
         run(args, server)
     else:
         server = tf.train.Server(cluster, job_name="ps", task_index=args.task,

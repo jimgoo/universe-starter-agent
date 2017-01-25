@@ -1,3 +1,6 @@
+"""
+
+"""
 import argparse
 import os
 import sys
@@ -33,7 +36,7 @@ def new_cmd(session, name, cmd, mode, logdir, shell):
 def create_commands(session, num_workers, remotes, env_id, logdir, shell='bash', mode='tmux'):
     # for launching the TF workers and for launching tensorboard
     base_cmd = [
-        'CUDA_VISIBLE_DEVICES=',
+        'CUDA_VISIBLE_DEVICES=', # <JDG> hard 1
         sys.executable, 'worker.py',
         '--log-dir', logdir, '--env-id', env_id,
         '--num-workers', str(num_workers)]
@@ -91,8 +94,9 @@ def run():
         print("Dry-run mode due to -n flag, otherwise the following commands would be executed:")
     else:
         print("Executing the following commands:")
+    print('-'*100)
     print("\n".join(cmds))
-    print("")
+    print('-'*100)
     if not args.dry_run:
         if args.mode == "tmux":
             os.environ["TMUX"] = ""

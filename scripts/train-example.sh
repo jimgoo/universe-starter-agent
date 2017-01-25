@@ -1,0 +1,8 @@
+# PongDeterministic-v3
+# gym-core.PongDeterministic-v3
+# flashgames.DuskDrive-v0 
+# flashgames.NeonRace-v0
+# wob.mini.ClickButton-v0
+
+python train.py --num-workers ${2} --env-id ${1} --log-dir /media/ssd/rl/${1}-workers-${2}
+

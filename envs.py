@@ -39,9 +39,12 @@ def create_flash_env(env_id, client_id, remotes, **_):
     env = FlashRescale(env)
 
     keys = ['left', 'right', 'up', 'down', 'x']
+
     if env_id == 'flashgames.NeonRace-v0':
         # Better key space for this game.
+        logger.info('----> using speical keys for %s' % env_id)
         keys = ['left', 'right', 'up', 'left up', 'right up', 'down', 'up x']
+
     logger.info('create_flash_env(%s): keys=%s', env_id, keys)
 
     env = DiscreteToFixedKeysVNCActions(env, keys)
@@ -210,7 +213,8 @@ class FixedKeyState(object):
 
 class DiscreteToFixedKeysVNCActions(vectorized.ActionWrapper):
     """
-    Define a fixed action space. Action 0 is all keys up. Each element of keys can be a single key or a space-separated list of keys
+    Define a fixed action space. Action 0 is all keys up. 
+    Each element of keys can be a single key or a space-separated list of keys.
 
     For example,
        e=DiscreteToFixedKeysVNCActions(e, ['left', 'right'])
